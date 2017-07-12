@@ -1,9 +1,16 @@
-from __future__ import print_function
-
 import tensorflow as tf
 
 a = tf.constant(3)
 b = tf.constant(2)
+x = tf.add(a, b)
 
 with tf.Session() as sess:
-	print("Addition with constants: %i" % sess.run(a+b))
+	writer = tf.summary.FileWriter('./graphs', sess.graph)
+	print(sess.run(x))
+
+#Close it when done
+writer.close()
+
+
+#run python helloworld.py
+#run tensorboard --logdir="./graphs"
