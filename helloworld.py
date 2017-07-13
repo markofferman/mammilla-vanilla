@@ -1,16 +1,4 @@
-import tensorflow as tf
+import tensorflow as tf 
 
-a = tf.constant([2, 2], name = "a")
-b = tf.constant([3, 6], name = "b")
-x = tf.add(a, b, name = "add")
-
-with tf.Session() as sess:
-	writer = tf.summary.FileWriter('./graphs', sess.graph)
-	print(sess.run(x))
-
-#Close it when done
-writer.close()
-
-
-#run python helloworld.py
-#run tensorboard --logdir="./graphs"
+my_const = tf.constant([1.0,2.0], name = "my_const")
+print(tf.get_default_graph().as_graph_def())
