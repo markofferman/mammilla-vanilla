@@ -3,9 +3,11 @@ import os
 import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-W = tf.Variable(10)
-assign_op = W.assign(100)
+a = tf.placeholder(tf.float32, shape=[3])
+
+b = tf.constant([5, 5, 5], tf.float32)
+
+c = a + b
 
 with tf.Session() as sess:
-	sess.run(assign_op)
-	print(W.eval())
+	print(sess.run(c, {a: [1, 2, 3]}))
