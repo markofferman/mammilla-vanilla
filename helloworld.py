@@ -3,15 +3,16 @@ import os
 import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-a = tf.placeholder(tf.float32, shape=[3])
+# create operations
+a = tf.add(2, 5)
+b = tf.multiply(a, 3)
 
-b = tf.constant([5, 5, 5], tf.float32)
+# start up a session
+sess = tf.Session()
 
-c = a + b
+# replace dictionairy with something else
+replace_dict = {a: 15}
 
-with tf.Session() as sess:
-	writer = tf.summary.FileWriter('./my_graph', sess.graph)
-	print(sess.run(c, {a: [1, 2, 3]}))
+# run the session with the replacement
 
-
-writer.close()
+print(sess.run(b, feed_dict = replace_dict))
