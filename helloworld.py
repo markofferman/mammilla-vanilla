@@ -9,11 +9,13 @@ z = tf.add(x, y)
 
 # the proper way:
 with tf.Session() as sess:
-	writer = tf.summary.FileWriter('./graphs', sess.graph)
+	print(tf.get_default_graph().as_graph_def())
+	#writer = tf.summary.FileWriter('./graphs', sess.graph)
 	sess.run(tf.global_variables_initializer())
 	for _ in range(10):
 		sess.run(z)
-		writer.close()
+
+		#writer.close()
 
 # the lazy loading way (run z-op in the loop):
 #with tf.Session() as sess:
