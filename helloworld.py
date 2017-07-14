@@ -3,16 +3,22 @@ import os
 import tensorflow as tf
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-# create operations
-a = tf.add(2, 5)
-b = tf.multiply(a, 3)
+x = tf.Variable(10, name = 'x')
+y = tf.Variable(20, name = 'y')
+z = tf.add(x, y)
 
-# start up a session
-sess = tf.Session()
+# the proper way:
+with tf.Session() as sess:
+	writer = tf.summary.FileWriter('./graphs', sess.graph)
+	sess.run(tf.global_variables_initializer())
+	for _ in range(10):
+		sess.run(z)
+		writer.close()
 
-# replace dictionairy with something else
-replace_dict = {a: 15}
-
-# run the session with the replacement
-
-print(sess.run(b, feed_dict = replace_dict))
+# the lazy loading way (run z-op in the loop):
+#with tf.Session() as sess:
+#	writer = tf.summary.FileWriter('./graphs', sess.graph)
+#	sess.run(tf.global_variables_initializer())
+#	for _ in range(10):
+#		sess.run(tf.add(x,y))
+#		writer.close()
