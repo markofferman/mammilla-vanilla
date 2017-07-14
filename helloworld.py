@@ -10,4 +10,8 @@ b = tf.constant([5, 5, 5], tf.float32)
 c = a + b
 
 with tf.Session() as sess:
+	writer = tf.summary.FileWriter('./my_graph', sess.graph)
 	print(sess.run(c, {a: [1, 2, 3]}))
+
+
+writer.close()
