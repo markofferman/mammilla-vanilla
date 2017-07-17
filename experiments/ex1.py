@@ -43,7 +43,14 @@ print(sess.run(x))
 # Hint: Look up tf.equal().
 ###############################################################################
 
-# YOUR CODE
+x = tf.Variable([[0, -2, -1], [0, 1, 2]], dtype = tf.float32, name = 'x')
+y = tf.zeros([2, 3], tf.float32)
+out = tf.equal(x, y)
+
+#x = tf.constant([[0, -2, -1], [0, 1, 2]])
+#y = tf.zeros_like(x)
+#out = tf.equal(x, y)
+
 
 ###############################################################################
 # 1d: Create the tensor x of value 
