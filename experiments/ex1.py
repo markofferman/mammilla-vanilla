@@ -2,9 +2,8 @@
 Simple TensorFlow exercises
 You should thoroughly test your code
 """
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
+#import os
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import tensorflow as tf
 
@@ -28,9 +27,15 @@ out = tf.cond(tf.greater(x, y), lambda: tf.add(x, y), lambda: tf.subtract(x, y))
 x = tf.random_uniform([-1, 1], dtype = tf.float32, name = 'x')
 y = tf.random_uniform([-1, 1], dtype = tf.float32, name = 'y')
 
-print(x, y)
+def f1(): return tf.constant(5)
+def f2(): return tf.constant(15)
+def f3(): return tf.contant(0)
+
+out = tf.case({tf.greater(x, y): f1, tf.less(x, y): f2}, default = f3, exclusive = True)
+
 sess = tf.InteractiveSession()
-print(sess.run)
+print(sess.run(out))
+
 
 ###############################################################################
 # 1c: Create the tensor x of the value [[0, -2, -1], [0, 1, 2]] 
