@@ -34,7 +34,9 @@ def f3(): return tf.contant(0)
 out = tf.case({tf.greater(x, y): f1, tf.less(x, y): f2}, default = f3, exclusive = True)
 
 sess = tf.InteractiveSession()
-print(sess.run(out))
+print(sess.run(x))
+
+
 
 
 ###############################################################################
