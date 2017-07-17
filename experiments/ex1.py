@@ -6,7 +6,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import tensorflow as tf
-
+"""
 ###############################################################################
 # 1a: Create two random 0-d tensors x and y of any distribution.
 # Create a TensorFlow object that returns x + y if x > y, and x - y otherwise.
@@ -77,23 +77,31 @@ out = tf.gather(x, indices)
 values = tf.range(1, 7)
 out = tf.diag(values)
 
-print(out)
-
 ###############################################################################
 # 1f: Create a random 2-d tensor of size 10 x 10 from any distribution.
 # Calculate its determinant.
 # Hint: Look at tf.matrix_determinant().
 ###############################################################################
 
-# YOUR CODE
+x = tf.random_uniform([10,10], name = 'x')
+print(tf.matrix_determinant(x))
+
+#m = tf.random_normal([10, 10], mean=10, stddev=1)
+#out = tf.matrix_determinant(m)
+
 
 ###############################################################################
 # 1g: Create tensor x with value [5, 2, 3, 5, 10, 6, 2, 3, 4, 2, 1, 1, 0, 9].
 # Return the unique elements in x
 # Hint: use tf.unique(). Keep in mind that tf.unique() returns a tuple.
 ###############################################################################
+"""
+x = tf.constant([5, 2, 3, 5, 10, 6, 2, 3, 4, 2, 1, 1, 0, 9])
+y, idx = tf.unique(x)
 
-# YOUR CODE
+with tf.Session() as sess:
+	print(sess.run(idx))
+	#print(sess.run(y))
 
 ###############################################################################
 # 1h: Create two tensors x and y of shape 300 from any normal distribution,
