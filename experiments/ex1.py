@@ -95,14 +95,14 @@ print(tf.matrix_determinant(x))
 # Return the unique elements in x
 # Hint: use tf.unique(). Keep in mind that tf.unique() returns a tuple.
 ###############################################################################
-"""
+
 x = tf.constant([5, 2, 3, 5, 10, 6, 2, 3, 4, 2, 1, 1, 0, 9])
 y, idx = tf.unique(x)
 
 with tf.Session() as sess:
 	print(sess.run(idx))
 	#print(sess.run(y))
-
+"""
 ###############################################################################
 # 1h: Create two tensors x and y of shape 300 from any normal distribution,
 # as long as they are from the same distribution.
@@ -113,4 +113,16 @@ with tf.Session() as sess:
 # Hint: see the Huber loss function in the lecture slides 3.
 ###############################################################################
 
-# YOUR CODE
+x = tf.random_normal([300], mean = 10, stddev = 1.0 )
+y = tf.random_normal([300], mean = 10, stddev = 1.0 )
+
+average = tf.reduce_mean(x - y)
+def f1(): return tf.reduce_mean(tf.square(x - y))
+def f2(): return tf.reduce_sum(tf.abs(x - y))
+out = tf.cond(average < 0, f1, f2)
+
+with tf.Session() as sess:
+	print(sess.run(out))
+
+
+
