@@ -23,17 +23,26 @@ X = tf.placeholder(tf.float32, name = "X")
 Y = tf.placeholder(tf.float32, name = "Y")
 
 # Step 3. Create Variable weight and bias
-w = tf.Variable(0.0, name = "weights")
+w = tf.Variable(0.0, name = "weights_1")
 b = tf.Variable(0.0, name = "bias")
 
 # Step 4. Construct model to predict Y
 Y_predicted = X * w + b
 
 # Step 5. Construct a loss function with the square error
-loss = tf.square(Y - Y_predicted, name = "loss")
+## loss = tf.square(Y - Y_predicted, name = "loss")
+
+# Extra. Huber loss
+def huber_loss(labels, predictions, delta = 1.0):
+	residual = tf.abs(predictions - labels)
+	condition = tf.less(residual, delta)
+	small_res = 0.5 * tf.square(residual)
+	large_res = delta * residual - 0.5 * tf.square(delta)
+	return tf.where(condition, small_res, large_res)
+
 
 # Step 6. Construct optimizer with gradient decient with learning rate of 0.01 to minimize loss
-optimizer = tf.train.GradientDescentOptimizer(learning_rate = 0.001).minimize(loss)
+optimizer = tf.train.GradientDescentOptimizer(learning_rate = 0.001).minimize(huber_loss(Y, Y_predicted))
 
 with tf.Session() as sess:
 	# Step 7. Initialize the global variables (w + b)
@@ -42,7 +51,7 @@ with tf.Session() as sess:
 	writer = tf.summary.FileWriter('./graphs/linear_reg', sess.graph)
 
 	# Step 8. train the model with 100 epochs
-	for i in range(100):
+	for i in range(50):
 		total_loss = 0
 		# with the data
 		for x, y in data:
