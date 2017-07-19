@@ -4,10 +4,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import tensorflow as tf
 import numpy as np 
-##import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt 
 import xlrd
 
-DATA_FILE = '../data/fire_theft.xls'
+import utils
+
+
+DATA_FILE = './data/fire_theft.xls'
 
 # Step 1. Read in the data
 book = xlrd.open_workbook(DATA_FILE, encoding_override = "utf-8")
@@ -36,13 +39,29 @@ with tf.Session() as sess:
 	# Step 7. Initialize the global variables (w + b)
 	sess.run(tf.global_variables_initializer())
 
+	writer = tf.summary.FileWriter('./graphs/linear_reg', sess.graph)
+
 	# Step 8. train the model with 100 epochs
 	for i in range(100):
+		total_loss = 0
 		# with the data
 		for x, y in data:
 			# session runs train_op to minimize loss
 			sess.run(optimizer, feed_dict={X: x, Y: y})
+		print('epoch {0}: {1}'.format(i, total_loss/n_samples))
 
+	writer.close()
 
 	# Step 9. Output the values of w & b
-	w_value, b_value = sess.run([w, b])
+	w, b = sess.run([w, b])
+	print("Value of b is ", b)
+	print("Value of w is", w)
+
+
+# Step 10. Plot the results
+# plot the results
+X, Y = data.T[0], data.T[1]
+plt.plot(X, Y, 'bo', label='Real data')
+plt.plot(X, X * w + b, 'r', label='Predicted data')
+plt.legend()
+plt.show()
