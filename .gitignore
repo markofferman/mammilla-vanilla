@@ -1,4 +1,8 @@
+data/
 tensorflow/
 graphs/
+
+*/__pycache__
+*/processed
 
 */.DS_Store
